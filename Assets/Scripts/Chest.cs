@@ -10,6 +10,8 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 [RequireComponent(typeof(Animator))]
 public class Chest : MonoBehaviour
 {
+    const string IsChestOpen = "_isChestOpen";
+
     [SerializeField] private PickedUpWeapon _weapon;
     [SerializeField] private Transform _spawnPoint;
     [SerializeField] private TMP_Text _text;
@@ -20,7 +22,6 @@ public class Chest : MonoBehaviour
 
     private bool _isOpen = false;
 
-    const string IsChestOpen = "_isChestOpen";
 
     private void Start()
     {

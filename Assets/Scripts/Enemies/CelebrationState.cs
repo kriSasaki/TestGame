@@ -5,9 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class CelebrationState : State
 {
-    private Animator _animator;
-
     private const string PlayerDie = "PlayerDie";
+
+    private Animator _animator;
 
     private void Awake()
     {

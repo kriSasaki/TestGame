@@ -9,6 +9,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(Animator))]
 public class Player : MonoBehaviour
 {
+    private const string GetDamage = "GetDamage";
+
     [SerializeField] private int _health;
     [SerializeField] private List<Weapon> _weapons;
     [SerializeField] private static SpriteRenderer _spriteRenderer;
@@ -32,8 +34,6 @@ public class Player : MonoBehaviour
     private bool _shoot => _input.Player.Shoot.IsPressed();
     private bool _use => _input.Player.Use.IsPressed();
     public string Layer => _spriteRenderer.sortingLayerName;
-
-    private const string GetDamage = "GetDamage";
 
     private void Awake()
     {

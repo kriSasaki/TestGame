@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public abstract class Weapon : MonoBehaviour
 {
+    protected const string Shot = "Shot";
+
     [SerializeField] private string _label;
     [SerializeField] private int _price;
     [SerializeField] private bool _isBuyed = false;
@@ -38,7 +40,6 @@ public abstract class Weapon : MonoBehaviour
 
     protected Animator Animator;
 
-    protected const string Shot = "Shot";
 
     protected static System.Random _random;
 
@@ -64,7 +65,19 @@ public abstract class Weapon : MonoBehaviour
         _random = new System.Random();
     }
 
-    public abstract void Shoot();
+    public virtual void Shoot()
+    {
+        if (Delay >= FireRate)
+        {
+            _audio.Play();
+            Animator.SetTrigger(Shot);
+            ScatterAngle = _shootPoint.eulerAngles;
+            ScatterAngle.z += Random.Range(-Scatter, Scatter);
+
+            Instantiate(Bullet, _shootPoint.position, Quaternion.Euler(ScatterAngle));
+            Delay = 0;
+        }
+    }
 
     public void Buy()
     {

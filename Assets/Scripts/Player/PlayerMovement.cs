@@ -8,6 +8,8 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer))]
 public class PlayerMovement : MonoBehaviour
 {
+    private const string Direction = "Direction";
+
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _takeDistance;
     [SerializeField] private float _holdDistance;
@@ -31,8 +33,6 @@ public class PlayerMovement : MonoBehaviour
     private float _angle315 = -45;
 
     private Side _side;
-
-    private const string Direction = "Direction";
 
     private void Awake()
     {

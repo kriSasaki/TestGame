@@ -9,6 +9,8 @@ using UnityEngine.Events;
 [RequireComponent(typeof(Animator))]
 public class Enemy : MonoBehaviour
 {
+    private const string GetDamage = "GetDamage";
+
     [SerializeField] private EnemyWeapon _weapon;
     [SerializeField] private Player _target;
     [SerializeField] private int _health;
@@ -21,8 +23,6 @@ public class Enemy : MonoBehaviour
     private AudioSource _audio;
 
     private Animator _animator;
-
-    private const string GetDamage = "GetDamage";
 
     private void Start()
     {

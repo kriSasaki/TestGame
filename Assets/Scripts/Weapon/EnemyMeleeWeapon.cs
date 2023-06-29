@@ -6,11 +6,11 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 [RequireComponent(typeof(LookDirection))]
 public class EnemyMeleeWeapon : EnemyWeapon
 {
+    private const string State = "State";
+
     private LookDirection _lookDirection;
 
     private bool IslookingUp;
-
-    private const string State = "State";
 
     private void Start()
     {
