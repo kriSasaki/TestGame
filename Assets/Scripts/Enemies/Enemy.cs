@@ -17,11 +17,12 @@ public class Enemy : MonoBehaviour
     public EnemyWeapon Weapon=> _weapon;
 
     public event UnityAction<Enemy> Dying;
-    public event UnityAction GetDamage;
 
     private AudioSource _audio;
 
     private Animator _animator;
+
+    private const string GetDamage = "GetDamage";
 
     private void Start()
     {
@@ -33,8 +34,7 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(int damage)
     {
         _health -= damage;
-        GetDamage?.Invoke();
-        _animator.SetTrigger("GetDamage");
+        _animator.SetTrigger(GetDamage);
         _audio.Play();
 
         if (_health <= 0)

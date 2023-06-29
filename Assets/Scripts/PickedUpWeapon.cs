@@ -23,6 +23,29 @@ public class PickedUpWeapon : MonoBehaviour
         _weaponDroping = StartCoroutine(DropWeapon());
     }
 
+    private void OnTriggerStay2D(Collider2D collider)
+    {
+        if (collider.gameObject.TryGetComponent(out Player player) && _isPickable)
+        {
+            _text.gameObject.SetActive(true);
+
+            if (player.Use)
+            {
+                _text.gameObject.SetActive(false);
+                player.AddWeapon(_weapon);
+                Destroy(gameObject);
+            }
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collider)
+    {
+        if (collider.gameObject.TryGetComponent(out Player player) && _isPickable)
+        {
+            _text.gameObject.SetActive(false);
+        }
+    }
+
     private IEnumerator DropWeapon()
     {
         while (_time < _delay)
@@ -37,29 +60,6 @@ public class PickedUpWeapon : MonoBehaviour
         {
             _isPickable = true;
             StopCoroutine(_weaponDroping);
-        }
-    }
-
-    private void OnTriggerStay2D(Collider2D collider)
-    {
-        if (collider.gameObject.TryGetComponent(out Player player) && _isPickable)
-        {
-            _text.gameObject.SetActive(true);
-
-            if (player.Use == 1)
-            {
-                _text.gameObject.SetActive(false);
-                player.AddWeapon(_weapon);
-                Destroy(gameObject);
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collider)
-    {
-        if (collider.gameObject.TryGetComponent(out Player player) && _isPickable)
-        {
-            _text.gameObject.SetActive(false);
         }
     }
 }

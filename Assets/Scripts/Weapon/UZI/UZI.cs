@@ -9,7 +9,7 @@ public class UZI : Weapon
         if (Delay >= FireRate)
         {
             _audio.Play();
-            Animator.SetTrigger("Shot");
+            Animator.SetTrigger(Shot);
             ScatterAngle = _shootPoint.eulerAngles;
             ScatterAngle.z += Random.Range(-Scatter, Scatter);
 

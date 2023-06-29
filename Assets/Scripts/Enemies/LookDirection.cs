@@ -10,6 +10,8 @@ public class LookDirection : MonoBehaviour
     private Vector3 _target;
     private Animator _animator;
 
+    private const string Direction = "Direction";
+
     private void Start()
     {
         _animator = GetComponent<Animator>();
@@ -46,22 +48,22 @@ public class LookDirection : MonoBehaviour
     {
         if (_direction.y > 0 && _direction.y > Math.Abs(_direction.x))
         {
-            _animator.SetInteger("Direction", 1);
+            _animator.SetInteger(Direction, 1);
         }
         
         if(_direction.x > 0 && _direction.x > Math.Abs(_direction.y))
         {
-            _animator.SetInteger("Direction", 3);
+            _animator.SetInteger(Direction, 3);
         }
         
         if(_direction.y < 0 && Math.Abs(_direction.y) > Math.Abs(_direction.x))
         {
-            _animator.SetInteger("Direction", 0);
+            _animator.SetInteger(Direction, 0);
         }
 
         if(_direction.x < 0 && Math.Abs(_direction.x) > Math.Abs(_direction.y))
         {
-            _animator.SetInteger("Direction", 2);
+            _animator.SetInteger(Direction, 2);
         }
     }
 }

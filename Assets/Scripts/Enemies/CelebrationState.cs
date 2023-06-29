@@ -7,6 +7,8 @@ public class CelebrationState : State
 {
     private Animator _animator;
 
+    private const string PlayerDie = "PlayerDie";
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -14,7 +16,7 @@ public class CelebrationState : State
 
     private void OnEnable()
     {
-        _animator.SetBool("PlayerDie", true);
+        _animator.SetBool(PlayerDie, true);
     }
 
     private void OnDisable()

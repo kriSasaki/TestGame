@@ -10,6 +10,8 @@ public class EnemyMeleeWeapon : EnemyWeapon
 
     private bool IslookingUp;
 
+    private const string State = "State";
+
     private void Start()
     {
         _lookDirection = GetComponent<LookDirection>();
@@ -21,11 +23,11 @@ public class EnemyMeleeWeapon : EnemyWeapon
 
         if (IslookingUp)
         {
-            _animator.SetInteger("State", 1);
+            _animator.SetInteger(State, 1);
         }
         else
         {
-            _animator.SetInteger("State", 0);
+            _animator.SetInteger(State, 0);
         }
     }
 
@@ -34,12 +36,12 @@ public class EnemyMeleeWeapon : EnemyWeapon
         if (IslookingUp)
         {
             _audio.Play();
-            _animator.SetInteger("State", 3);
+            _animator.SetInteger(State, 3);
         }
         else
         {
             _audio.Play();
-            _animator.SetInteger("State", 2);
+            _animator.SetInteger(State, 2);
         }
     }
 }

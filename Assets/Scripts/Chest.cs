@@ -28,19 +28,13 @@ public class Chest : MonoBehaviour
         _animator = GetComponent<Animator>();
     }
 
-    private void Open()
-    {
-        _animator.SetBool(IsChestOpen, true);
-        Instantiate(_weapon, _spawnPoint.position, Quaternion.identity);
-    }
-
     private void OnTriggerStay2D(Collider2D collider)
     {
         if (collider.gameObject.TryGetComponent(out Player player) && _isOpen == false)
         {
             _text.gameObject.SetActive(true);
 
-            if (player.Use == 1)
+            if (player.Use)
             {
                 _audio.Play();
                 _text.gameObject.SetActive(false);
@@ -57,5 +51,11 @@ public class Chest : MonoBehaviour
         {
             _text.gameObject.SetActive(false);
         }
+    }
+
+    private void Open()
+    {
+        _animator.SetBool(IsChestOpen, true);
+        Instantiate(_weapon, _spawnPoint.position, Quaternion.identity);
     }
 }

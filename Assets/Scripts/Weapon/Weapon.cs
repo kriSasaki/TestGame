@@ -38,6 +38,8 @@ public abstract class Weapon : MonoBehaviour
 
     protected Animator Animator;
 
+    protected const string Shot = "Shot";
+
     protected static System.Random _random;
 
     public string Label => _label;

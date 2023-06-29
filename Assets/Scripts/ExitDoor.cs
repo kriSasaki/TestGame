@@ -15,7 +15,7 @@ public class ExitDoor : MonoBehaviour
         {
             _text.gameObject.SetActive(true);
 
-            if (player.Use == 1)
+            if (player.Use)
             {
                 Time.timeScale = 0;
                 _text.gameObject.SetActive(false);

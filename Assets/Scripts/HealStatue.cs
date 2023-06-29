@@ -26,7 +26,7 @@ public class HealStatue : MonoBehaviour
         {
             _text.gameObject.SetActive(true);
 
-            if (player.Use == 1)
+            if (player.Use)
             {
                 _text.gameObject.SetActive(false);
                 _audio.Play();

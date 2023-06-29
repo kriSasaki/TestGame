@@ -14,11 +14,9 @@ public class Player : MonoBehaviour
     [SerializeField] private static SpriteRenderer _spriteRenderer;
     [SerializeField] private AudioSource _applyDamage;
 
-    public float Use => _use;
-    public int Money { get; private set; }
+    public bool Use => _use;
 
     public event UnityAction<int, int> HealthChanged;
-    public event UnityAction<int> MoneyChanged;
     public event UnityAction<Sprite> WeaponChanged;
 
     protected Weapon _currentWeapon;
@@ -31,9 +29,11 @@ public class Player : MonoBehaviour
     private Animator _animator;
 
     private float _mouseScrollY;
-    private float _shoot => _input.Player.Shoot.ReadValue<float>();
-    private float _use => _input.Player.Use.ReadValue<float>();
-    public string Layer=>_spriteRenderer.sortingLayerName;
+    private bool _shoot => _input.Player.Shoot.IsPressed();
+    private bool _use => _input.Player.Use.IsPressed();
+    public string Layer => _spriteRenderer.sortingLayerName;
+
+    private const string GetDamage = "GetDamage";
 
     private void Awake()
     {
@@ -49,14 +49,24 @@ public class Player : MonoBehaviour
         GenerateStartWeapons();
     }
 
+    private void OnEnable()
+    {
+        _input.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _input.Disable();
+    }
+
     private void Update()
     {
-        if (_shoot == 1)
+        if (_shoot)
         {
             Shoot();
         }
 
-        if(_mouseScrollY>0) 
+        if (_mouseScrollY > 0)
         {
             NextWeapon();
         }
@@ -69,7 +79,7 @@ public class Player : MonoBehaviour
     public void AddWeapon(Weapon newWeapon)
     {
         _weapons.Add(newWeapon);
-        _weapons[_weapons.Count-1] = Instantiate(_weapons[_weapons.Count-1], gameObject.transform);
+        _weapons[_weapons.Count - 1] = Instantiate(_weapons[_weapons.Count - 1], gameObject.transform);
         _weapons[_weapons.Count - 1] = SetWeaponVisible(_weapons[_weapons.Count - 1], false);
     }
 
@@ -78,7 +88,7 @@ public class Player : MonoBehaviour
         _applyDamage.Play();
         _currentHealth -= damage;
         HealthChanged?.Invoke(_currentHealth, _health);
-        _animator.SetTrigger("GetDamage");
+        _animator.SetTrigger(GetDamage);
 
         if (_currentHealth <= 0)
         {
@@ -88,7 +98,7 @@ public class Player : MonoBehaviour
 
     public void ApplyHeal(int heal)
     {
-        if(_currentHealth + heal <= _health)
+        if (_currentHealth + heal <= _health)
         {
             _currentHealth += heal;
         }
@@ -100,19 +110,6 @@ public class Player : MonoBehaviour
         HealthChanged?.Invoke(_currentHealth, _health);
     }
 
-    public void AddMoney(int money)
-    {
-        Money += money;
-        MoneyChanged?.Invoke(Money);
-    }
-
-    public void BuyWeapon(Weapon weapon)
-    {
-        Money -= weapon.Price;
-        MoneyChanged?.Invoke(Money);
-        _weapons.Add(weapon);
-    }
-
     public void Shoot()
     {
         _currentWeapon.Shoot();
@@ -120,7 +117,7 @@ public class Player : MonoBehaviour
 
     public void SetWeaponsPositionZ(int z)
     {
-        foreach(var weapon in _weapons) 
+        foreach (var weapon in _weapons)
         {
             weapon.SetPositionZ(z);
         }
@@ -154,19 +151,9 @@ public class Player : MonoBehaviour
         ChangeWeapon(_weapons[_currentWeaponNumber]);
     }
 
-    private void OnEnable()
-    {
-        _input.Enable();
-    }
-
-    private void OnDisable()
-    {
-        _input.Disable();
-    }
-
     private void ChangeWeapon(Weapon weapon)
     {
-        _currentWeapon = SetWeaponVisible(_currentWeapon, false);;
+        _currentWeapon = SetWeaponVisible(_currentWeapon, false); ;
         _currentWeapon = weapon;
         _currentWeapon = SetWeaponVisible(_currentWeapon, true);
         WeaponChanged?.Invoke(_currentWeapon.Icon);
@@ -174,7 +161,7 @@ public class Player : MonoBehaviour
 
     private void GenerateStartWeapons()
     {
-        for(int i=0; i < _weapons.Count; i++)
+        for (int i = 0; i < _weapons.Count; i++)
         {
             _weapons[i] = Instantiate(_weapons[i], gameObject.transform);
             _weapons[i] = SetWeaponVisible(_weapons[i], false);

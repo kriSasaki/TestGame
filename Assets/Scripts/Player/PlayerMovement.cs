@@ -32,11 +32,7 @@ public class PlayerMovement : MonoBehaviour
 
     private Side _side;
 
-    private enum Side
-    {
-        Left = -1,
-        Right = 1
-    }
+    private const string Direction = "Direction";
 
     private void Awake()
     {
@@ -69,12 +65,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (_lookAngle > _angle315 && _lookAngle < _angle45)
         {
-            _animator.SetInteger("Direction", 2);
+            _animator.SetInteger(Direction, 2);
         }
 
         if (_lookAngle > _angle45 && _lookAngle < _angle135)
         {
-            _animator.SetInteger("Direction", 1);
+            _animator.SetInteger(Direction, 1);
             _player.SetWeaponsPositionZ(0);
         }
         else
@@ -84,12 +80,12 @@ public class PlayerMovement : MonoBehaviour
 
         if (_lookAngle > _angle135 || _lookAngle < _angle225)
         {
-            _animator.SetInteger("Direction", 3);
+            _animator.SetInteger(Direction, 3);
         }
 
         if (_lookAngle > _angle225 && _lookAngle < _angle315)
         {
-            _animator.SetInteger("Direction", 0);
+            _animator.SetInteger(Direction, 0);
         }
     }
 
@@ -114,5 +110,11 @@ public class PlayerMovement : MonoBehaviour
         }
 
         return _side;
+    }
+
+    private enum Side
+    {
+        Left = -1,
+        Right = 1
     }
 }
